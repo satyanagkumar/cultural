@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CulturalCuisine Dashboard</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      margin-top: 20px;
+    }
+    .navbar-custom {
+      background-color: #fff; 
+      box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    }
+    .navbar-custom .navbar-brand {
+      color: #333;
+      font-weight: bold;
+    }
+    .navbar-custom .navbar-nav .nav-link {
+      color: #333;
+    }
+    .navbar-custom .nav-item.active .nav-link,
+    .navbar-custom .nav-item:hover .nav-link {
+      color: #ffc107;
+    }
+    .navbar-custom .btn {
+      padding: .375rem .75rem;
+      margin-left: .5rem;
+    }
+
+    .hero-section {
+      background: url('/background_image.jpg') no-repeat center center/cover;
+      padding: 4rem 0;
+      color: #fff;
+    }
+    .hero-section .btn {
+      background: #ffc107;
+      border: none;
+      border-radius: 50px;
+      padding: 0.5rem 1.5rem;
+      font-size: 1rem;
+      margin: 0 0.25rem;
+    }
+    .hero-section .btn:hover {
+      background: #e0a800;
+    }
+    .hero-section .btn.search-btn {
+      background: #28a745;
+      color: #fff;
+    }
+    .hero-section .btn.search-btn:hover {
+      background: #218838;
+    }
+
+    .hero-section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-section::before {
+      content: '';
+      display: block;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.5); /* Black with 50% opacity */
+      z-index: -1;
+    }
+
+
+    /* You should extract this to a separate CSS file in production */
+    .exclusive-offer {
+      background-color: #f8f9fa;
+      text-align: center;
+      padding: 2rem 0;
+    }
+    .exclusive-offer h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .exclusive-offer .btn {
+      background: #ffc107;
+      color: #fff;
+      border-radius: 50px;
+      padding: 0.5rem 1.5rem;
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
+    .exclusive-offer .btn:hover {
+      background: #ffc107;
+    }
+
+    footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 1rem 0;
+      margin-top: 4rem;
+    }
+    .recipe-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    
+    .recipe-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .recipe-card img {
+      width: 100%;
+      height: auto;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .recipe-details {
+      padding: 20px;
+    }
+    
+    .recipe-details h3 {
+      margin-top: 0;
+    }
+    
+    .recipe-details p {
+      margin: 0;
+    }   
+    
+    .recipe-details button {
+      background-color: #ffc107;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .recipe-details button:hover {
+      background-color: #ffc107;
+    }
+
+    /* featured section */
+    .featured-recipes {
+      font-family: 'Open Sans', sans-serif;
+      margin: 20px;
+      padding-left: 15px; /* align with your site's layout */
+    }
+
+    .featured-recipes h2 {
+      font-size: 1.5em;
+      color: #333;
+      margin-bottom: 1em;
+    }
+
+    .recipes-container {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+    }
+
+    .recipe-card {
+      width: 250px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      background-color: #fff;
+      position: relative;
+    }
+
+    .recipe-image {
+      height: 150px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .recipe-rating {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: #ffc107;
+      color: #fff;
+      border-radius: 50%;
+      padding: 0.3em 0.6em;
+      display: flex;
+      align-items: center;
+      font-size: 0.875em;
+    }
+
+    .rating-value {
+      margin-right: 0.2em;
+    }
+
+    .rating-star {
+      color: #fff;
+    }
+
+    .recipe-title {
+      font-size: 1.1em;
+      font-weight: bold;
+      margin: 0.5em;
+    }
+
+    .recipe-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1em 1em 1em;
+    }
+
+    .recipe-cuisine,
+    .recipe-prep-time {
+      font-size: 0.875em;
+    }
+
+    .recipe-link {
+      position: absolute;
+      top: 150px;
+      right: 10px;
+      width: 30px;
+      height: 30px;
+      font-size: 30px;
+      color: #000;
+      z-index: 999;
+      mask-size: cover;
+      background-size: cover;
+      transition: background-color 0.3s;
+    }
+
+ 
+
+    /* Ensure this CSS is loaded after Bootstrap to override styles */
+    .btn {
+      border-radius: 50px;
+    }
+
+    .cuisines-title {
+      text-align: center;
+      font-size: 24px;
+      margin-top: 20px;
+      font-family: Arial, sans-serif;
+    }
+
+    .cuisines-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      margin: 20px 0;
+    }
+
+    .cuisine-item {
+      flex-basis: calc(33.33% - 40px); /* Adjust size and space between items */
+      margin: 20px;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cuisine-image {
+      width: 100%;
+      height: 150px; /* Fixed height for uniformity */
+      object-fit: cover; /* Ensures image covers the area without distortion */
+    }
+
+    .cuisine-link {
+      display: block;
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 10px;
+      font-size: 16px;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      text-decoration: none;
+    }
+
+    .cuisine-link:hover {
+      color: white;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    #profileBtn {
+      display: inline-block;
+      background-color: #ffc107; 
+      margin-left: 20px;
+      width: 40px; /* Width of the button */
+      height: 40px; /* Height of the button */
+      border-radius: 20px; /* Makes the button rounded */
+      overflow: hidden; /* Ensures no overflow outside the button */
+      cursor: pointer; /* Changes cursor to pointer to indicate it's clickable */
+      border: none; /* No border for a cleaner look */
+    }
+
+    #profileBtn img {
+      width: 100%; /* Ensures the icon fits the button */
+      height: auto; /* Maintains aspect ratio of the icon */
+      display: block; /* Removes any extra space inside the anchor */
+    }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+      z-index: 9999; /* Ensure the popup appears above other content */
+    }
+    
+    .popup-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 600px; /* Maximum width of the popup */
+    }
+    
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    
+    
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-custom mb-5">
+    <div class="container">
+      <a class="navbar-brand" href="#">CulturalCui</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/dashboard">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/recipes">Recipes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Stories</a>
+          </li>
+        </ul>
+       <a href="/register"><button class="btn btn-primary" >Join</button></a> 
+       <a href="/login">  <button class="btn btn-outline-primary">Log in</button></a>
+       <a href="profile/openprofile" id="profileBtn">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Icon">
+      </a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero-section text-center">
+    <h1>Discover Traditional Recipes</h1>
+    <p>Explore a world of culinary heritage!</p>
+    <div class="mb-4">
+      <button class="btn">Category</button>
+      <button class="btn">Ingredients</button>
+      <button class="btn">Comments</button>
+      <button class="btn">Substitutions</button>
+      <button class="btn search-btn" id="searchBtn" >Search</button>
+    </div>
+    <div id="searchBox" style="display: none;">
+      <input type="text" id="searchInput" placeholder="Search for recipe...">
+      <button class="btn" id="executeSearchBtn">Search</button>
+    </div>
+  </header>
+
+  
+  <h2 class="cuisines-title">Popular Cuisines</h2>
+  <ul class="cuisines-list">
+    <% categories.forEach(category => {
+      let imageUrl = "";
+      switch(category.name) {
+        case 'Indian':
+          imageUrl = "https://uploads-ssl.webflow.com/5fe0022130b6119c3b25d03f/6000a4262c3c62f6aadb85d3_shutterstock_1044844045-p-1080.jpeg";
+          break;
+        case 'Italian':
+          imageUrl = "https://www.chenabgourmet.com/wp-content/uploads/2021/06/italian-food.jpeg";
+          break;
+        case 'Asian':
+          imageUrl = "https://fox2now.com/wp-content/uploads/sites/14/2022/05/GettyImages-545286388.jpg?w=2560&h=1440&crop=1";
+          break;
+        case 'Mexican':
+          imageUrl = "https://holytequila.com/wp-content/uploads/2022/05/history-of-mexican-food.jpg";
+          break;
+        case 'Chinese':
+          imageUrl = "https://miro.medium.com/v2/resize:fit:1100/1*nrHqUCmMfDdfFUSxC6nblg.png";
+          break;
+        case 'Japanese':
+          imageUrl = "https://www.tastingtable.com/img/gallery/20-japanese-dishes-you-need-to-try-at-least-once/l-intro-1664219638.jpg";
+          break;
+        default:
+          imageUrl = "https://example.com/path-to-default-cuisine-image.jpg";
+          break;
+      }
+      %>
+      <li class="cuisine-item">
+        <img src="<%= imageUrl %>" class="cuisine-image" alt="<%= category.name %>">
+        <a href="/recipes/category/<%= category._id %>" class="cuisine-link"><%= category.name %></a>
+      </li>
+    <% }) %>
+  </ul>
+  
+  <div id="popup" class="popup">
+    <div class="popup-content">
+      <span class="close" onclick="closePopup()">&times;</span>
+      <div id="searchResults"></div>
+    </div>
+  </div>
+  
+
+  <div class="featured-recipes">
+    <h2>Featured Recipes</h2>
+    <div class="recipes-container">
+      <% recipes.slice(0, 6).forEach(recipe => { %>
+        <div class="recipe-card">
+          <% if (recipe.image) { %>
+            <div class="recipe-image" style="background-image: url('<%= '/' + recipe.image.replace(/\\/g, '/') %>');"></div>
+          <% } else { %>
+            <!-- Placeholder if no image available -->
+            <div class="recipe-image" style="background-image: url('/images/default.jpg');"></div>
+          <% } %>
+          <div class="recipe-rating">
+            <span class="rating-value"><%= recipe.rating %></span>
+            <i class="fas fa-star rating-star"></i>
+          </div>
+          <h3 class="recipe-title"><%= recipe.title %></h3>
+          <div class="recipe-info">
+            <span class="recipe-cuisine"><%= recipe.category.name %> Cuisine</span>
+            <span class="recipe-prep-time">Prep Time: <%= recipe.preparationTime   %> min</span>
+            <a href="/recipes/<%= recipe._id %>" class="recipe-link">></a>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+  
+  
+  
+  
+  <!-- Add your main content here -->
+
+  <section class="exclusive-offer">
+    <h2>Exclusive Offer!</h2>
+    <p>Want to receive special recipes and insider tips from our culinary experts?</p>
+    <button class="btn">Join the Club</button>
+  </section>
+
+  <footer>
+    <p>CulturalCuisine</p>
+    <p>Your gateway to global flavors since 1997</p>
+  </footer>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const token = localStorage.getItem('token');
+    
+    if (token) {
+      const loginBtn = document.querySelector('a[href="/login"]');
+      const joinBtn = document.querySelector('a[href="/register"]');
+      
+      if (loginBtn && joinBtn) {
+        loginBtn.textContent = 'Logout';
+        loginBtn.href = '#'; // You can set the logout URL here if needed
+        joinBtn.style.display = 'none';
+        
+        loginBtn.addEventListener('click', function() {
+          // Remove token from local storage
+          localStorage.removeItem('token');
+          // Redirect to home page or wherever you want after logout
+          window.location.href = '/';
+        });
+      }
+    }
+  });
+  
+  // JavaScript to toggle search box visibility
+const searchBtn = document.getElementById('searchBtn');
+const searchBox = document.getElementById('searchBox');
+searchBtn.addEventListener('click', () => {
+  searchBox.style.display = searchBox.style.display === 'none' ? 'block' : 'none';
+});
+
+// JavaScript to handle recipe search
+const executeSearchBtn = document.getElementById('executeSearchBtn');
+executeSearchBtn.addEventListener('click', async () => {
+  const searchInput = document.getElementById('searchInput').value;
+  // Use searchInput to search for recipes
+  try {
+    const response = await fetch(`/recipes/search?query=${encodeURIComponent(searchInput)}`);
+    if (response.ok) {
+      const recipes = await response.json();
+      console.log('Search results:', recipes);
+      // Render the search results
+    renderSearchResults(recipes);
+    } else {
+      console.error('Failed to fetch recipes');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+// Function to display the popup
+function openPopup() {
+  document.getElementById('popup').style.display = 'block';
+}
+
+// Function to close the popup
+function closePopup() {
+  document.getElementById('popup').style.display = 'none';
+}
+
+// Function to render search results in the popup
+function renderSearchResults(results) {
+  const searchResultsContainer = document.getElementById('searchResults');
+  // Clear previous search results
+  searchResultsContainer.innerHTML = '';
+  // Iterate over results and add them to the popup
+  results.forEach(result => {
+    // Create recipe card element
+    const recipeCard = document.createElement('div');
+    recipeCard.classList.add('recipe-card');
+
+    // Recipe image
+    const recipeImage = document.createElement('div');
+    recipeImage.classList.add('recipe-image');
+    recipeImage.style.backgroundImage = `url('${result.image ? '/' + result.image.replace(/\\/g, '/') : '/images/default.jpg'}')`;
+    recipeCard.appendChild(recipeImage);
+
+    // Recipe rating
+    const recipeRating = document.createElement('div');
+    recipeRating.classList.add('recipe-rating');
+    const ratingValue = document.createElement('span');
+    ratingValue.classList.add('rating-value');
+    ratingValue.textContent = result.rating;
+    const ratingStar = document.createElement('i');
+    ratingStar.classList.add('fas', 'fa-star', 'rating-star');
+    recipeRating.appendChild(ratingValue);
+    recipeRating.appendChild(ratingStar);
+    recipeCard.appendChild(recipeRating);
+
+    // Recipe title
+    const recipeTitle = document.createElement('h3');
+    recipeTitle.classList.add('recipe-title');
+    recipeTitle.textContent = result.title;
+    recipeCard.appendChild(recipeTitle);
+
+    // Recipe info
+    const recipeInfo = document.createElement('div');
+    recipeInfo.classList.add('recipe-info');
+    const recipeCuisine = document.createElement('span');
+    recipeCuisine.classList.add('recipe-cuisine');
+    recipeCuisine.textContent = `${result.category.name} Cuisine`;
+    const recipePrepTime = document.createElement('span');
+    recipePrepTime.classList.add('recipe-prep-time');
+    recipePrepTime.textContent = `Prep Time: ${result.preparationTime} min`;
+    const recipeLink = document.createElement('a');
+    recipeLink.classList.add('recipe-link');
+    recipeLink.href = `/recipes/${result._id}`;
+    recipeLink.textContent = '>';
+    recipeInfo.appendChild(recipeCuisine);
+    recipeInfo.appendChild(recipePrepTime);
+    recipeInfo.appendChild(recipeLink);
+    recipeCard.appendChild(recipeInfo);
+
+    // Append recipe card to search results container
+    searchResultsContainer.appendChild(recipeCard);
+  });
+  // Display the popup with search results
+  openPopup();
+}
+
+
+</script>
+  <!-- Bootstrap JS, Popper.js, and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
