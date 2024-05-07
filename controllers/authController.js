@@ -23,7 +23,7 @@ const signup = async (req, res) => {
 
     // Save the user to the database
     await newUser.save();
-    JWT_SECRET="#%YRWR#F#"
+    JWT_SECRET="#%YRWR#F#a"
 
     // Generate JWT token
     const token = jwt.sign({ userId: newUser._id }, JWT_SECRET, { expiresIn: '7d' });
@@ -50,7 +50,7 @@ const login = async (req, res) => {
     if (!validPassword) {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
-    JWT_SECRET="#%YRWR#F#"
+    JWT_SECRET="#%YRWR#F#a"
 
     // Generate JWT token
     const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '7d' });
