@@ -7,11 +7,11 @@ const authenticateToken = (req, res, next) => {
   if (token == null) {
     return res.sendStatus(401);
   }
-  JWT_SECRET="#%YRWR#F#"
+  JWT_SECRET="#%YRWR#F#a"
 
   jwt.verify(token, JWT_SECRET, (err, user) => {
     if (err) {
-      console.log("eroor is here");
+      console.log("error is here");
       return res.sendStatus(403);
     }
     console.log("i am here");

@@ -63,19 +63,4 @@ const login = async (req, res) => {
   }
 };
 
-const authenticateToken = (token) => {
-  try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    return !!decoded;
-  } catch {
-    return false;
-  }
-};
-
-const JWT_SECRET = process.env.JWT_SECRET || '#%YRWR#F#';
-
-const generateValidToken = (userId) => {
-  return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '7d' });
-};
-
-module.exports = { signup, login, authenticateToken, generateValidToken };
+module.exports = { signup, login };
